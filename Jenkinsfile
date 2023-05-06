@@ -72,6 +72,7 @@ pipeline{
                 }
             }
         }
+        
         stage('Version Commit') {
             steps {         
                 script{
@@ -81,4 +82,5 @@ pipeline{
      }
     }
 
+}
 }
