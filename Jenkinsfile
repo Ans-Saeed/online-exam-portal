@@ -30,12 +30,12 @@ pipeline{
             steps{
                 script{
                     echo 'building the backend server and pushing to dockerhub...'
-                    def location = "/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/backend/"
-                    def imageName = incrementVersion("$location")
+                    def location = "$WORKSPACE/backend/"
+                    def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    builddockerImage ("$imageName", "$location")
+                    builddockerImage (imageName, location)
                     dockerLogin()
-                    dockerPush "$imageName"
+                    dockerPush (imageName)
                 }
             }
         }
@@ -44,11 +44,11 @@ pipeline{
             steps{
                 script{
                     echo 'building frontend docker image and pushing to dockerhub'
-                    def location = "/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/frontend/"
-                    def imageName = incrementVersion("$location")
+                    def location = "$WORKSPACE/frontend/"
+                    def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    builddockerImage ("$imageName", "$location")
-                    dockerPush "$imageName"
+                    builddockerImage (imageName, location)
+                    dockerPush (imageName)
                 }
             }
         }
@@ -56,11 +56,11 @@ pipeline{
             steps{
                 script{
                     echo 'building user-portal-frontend docker image and pushing to dockerhub'
-                    def location = "/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/user-portal-frontend/"
-                    def imageName = incrementVersion("$location")
+                    def location = "$WORKSPACE/user-portal-frontend/"
+                    def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    builddockerImage ("$imageName", "$location")
-                    dockerPush "$imageName"
+                    builddockerImage (imageName, location)
+                    dockerPush (imageName)
                     }
             }
         }
