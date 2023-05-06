@@ -28,7 +28,7 @@ pipeline{
                     def dockerimage= "anssaeed/my-repo:backend-$imageName"
                     builddockerImage (dockerimage, location)
                     dockerLogin()
-                    dockerPush (imageName)
+                    dockerPush (dockerimage)
                 }
             }
         }
@@ -42,7 +42,7 @@ pipeline{
                     echo "Image Name: ${imageName}"
                     def dockerimage= "anssaeed/my-repo:frontend-$imageName"
                     builddockerImage (dockerimage, location)
-                    dockerPush (imageName)
+                    dockerPush (dockerimage)
                 }
             }
         }
@@ -55,7 +55,7 @@ pipeline{
                     echo "Image Name: ${imageName}"
                     def dockerimage= "anssaeed/my-repo:user-portal-frontend-$imageName"
                     builddockerImage (dockerimage, location)
-                    dockerPush (imageName)
+                    dockerPush (dockerimage)
                     }
             }
         }
