@@ -1,4 +1,5 @@
 version: '1'
+# This is docker compose for running all three backend,frontend and userportal-frontend and mongodb as well 
 services:
   backend:
     container_name: backend-app
