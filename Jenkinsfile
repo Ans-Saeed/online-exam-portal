@@ -25,7 +25,8 @@ pipeline{
                     def location = "$WORKSPACE/backend/"
                     def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    builddockerImage (imageName, location)
+                    def dockerimage= "anssaeed/my-repo:backend-$imageName"
+                    builddockerImage (dockerimage, location)
                     dockerLogin()
                     dockerPush (imageName)
                 }
@@ -39,7 +40,8 @@ pipeline{
                     def location = "$WORKSPACE/frontend/"
                     def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    builddockerImage (imageName, location)
+                    def dockerimage= "anssaeed/my-repo:frontend-$imageName"
+                    builddockerImage (dockerimage, location)
                     dockerPush (imageName)
                 }
             }
@@ -51,7 +53,8 @@ pipeline{
                     def location = "$WORKSPACE/user-portal-frontend/"
                     def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    builddockerImage (imageName, location)
+                    def dockerimage= "anssaeed/my-repo:user-portal-frontend-$imageName"
+                    builddockerImage (dockerimage, location)
                     dockerPush (imageName)
                     }
             }
