@@ -25,7 +25,7 @@ pipeline{
                     echo "Image Name: ${imageName}"
                 }
             }
-
+        }
         stage('build server'){
             steps{
                 script{
@@ -72,7 +72,6 @@ pipeline{
                 }
             }
         }
-        
         stage('Version Commit') {
             steps {         
                 script{
@@ -82,5 +81,4 @@ pipeline{
      }
     }
 
-}
 }
