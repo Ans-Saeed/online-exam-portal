@@ -23,7 +23,7 @@ pipeline{
                     echo 'building the backend server and pushing to dockerhub...'
                     builddockerImage ('anssaeed/my-repo:backend1.0', '/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/backend/')
                     dockerLogin()
-                    dockerPush'anssaeed/my-repo:server1.0'
+                    dockerPush'anssaeed/my-repo:backend1.0'
                 }
             }
         }
@@ -42,7 +42,7 @@ pipeline{
             steps{
                 script{
                     echo 'building user-portal-frontend docker image and pushing to dockerhub'
-                    builddockerImage ('anssaeed/my-repo:userportal1.0', '/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/user-portal-frontemd/')
+                    builddockerImage ('anssaeed/my-repo:userportal1.0', '/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/user-portal-frontend/')
                     // dockerLogin()
                     dockerPush'anssaeed/my-repo:userportal1.0'
                 }
