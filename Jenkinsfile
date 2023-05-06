@@ -21,7 +21,7 @@ pipeline{
             steps{
                 script{
                     echo 'building the backend server and pushing to dockerhub...'
-                    builddockerimage 'anssaeed/my-repo:server1.0'
+                    builddockerImage 'anssaeed/my-repo:server1.0'
                     dockerLogin()
                     dockerPush'anssaeed/my-repo:server1.0'
                 }
@@ -32,7 +32,7 @@ pipeline{
             steps{
                 script{
                     echo 'building frontend docker image and pushing to dockerhub'
-                     builddockerimage 'anssaeed/my-repo:frontend1.0'
+                     builddockerImage 'anssaeed/my-repo:frontend1.0'
                     // dockerLogin()
                     dockerPush'anssaeed/my-repo:frontend1.0'
                 }
@@ -42,7 +42,7 @@ pipeline{
             steps{
                 script{
                     echo 'building user-portal-frontend docker image and pushing to dockerhub'
-                    builddockerimage 'anssaeed/my-repo:userportal1.0'
+                    builddockerImage 'anssaeed/my-repo:userportal1.0'
                     // dockerLogin()
                     dockerPush'anssaeed/my-repo:userportal1.0'
                 }
