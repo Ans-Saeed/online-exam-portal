@@ -25,6 +25,7 @@ def buildUserPortal(){
         usernamePassword(credentialsId:'dockerhub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')
     ]){
         // sh 'cd user-portal-frontend/'
+        sh 'echo Building user portal'
         sh 'docker build -t anssaeed/my-repo:userportal1.0  /var/jenkins_home/workspace/online-exam-portal-pipeline/user-portal-frontend/'
         sh 'echo $PASS | docker login -u $USER --password-stdin'
         sh 'docker push anssaeed/my-repo:userportal1.0'
