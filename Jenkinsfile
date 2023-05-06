@@ -17,13 +17,25 @@ pipeline{
                 }
             }
         }
+
+        stage('version bump'){
+            steps{
+                script{
+                    def imageName = incrementVersion('location_argument')
+                    echo "Image Name: ${imageName}"
+                }
+            }
+
         stage('build server'){
             steps{
                 script{
                     echo 'building the backend server and pushing to dockerhub...'
-                    builddockerImage ('anssaeed/my-repo:backend1.0', '/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/backend/')
+                    def location = "/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/backend/"
+                    def imageName = incrementVersion("$location")
+                    echo "Image Name: ${imageName}"
+                    builddockerImage ("$imageName", "$location")
                     dockerLogin()
-                    dockerPush'anssaeed/my-repo:backend1.0'
+                    dockerPush "$imageName"
                 }
             }
         }
@@ -32,9 +44,11 @@ pipeline{
             steps{
                 script{
                     echo 'building frontend docker image and pushing to dockerhub'
-                     builddockerImage ('anssaeed/my-repo:frontend1.0', '/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/frontend/')
-                    // dockerLogin()
-                    dockerPush'anssaeed/my-repo:frontend1.0'
+                    def location = "/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/frontend/"
+                    def imageName = incrementVersion("$location")
+                    echo "Image Name: ${imageName}"
+                    builddockerImage ("$imageName", "$location")
+                    dockerPush "$imageName"
                 }
             }
         }
@@ -42,12 +56,15 @@ pipeline{
             steps{
                 script{
                     echo 'building user-portal-frontend docker image and pushing to dockerhub'
-                    builddockerImage ('anssaeed/my-repo:userportal1.0', '/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/user-portal-frontend/')
-                    // dockerLogin()
-                    dockerPush'anssaeed/my-repo:userportal1.0'
-                }
+                    def location = "/var/jenkins_home/workspace/e-online-exam-portal_jenkins-job/user-portal-frontend/"
+                    def imageName = incrementVersion("$location")
+                    echo "Image Name: ${imageName}"
+                    builddockerImage ("$imageName", "$location")
+                    dockerPush "$imageName"
+                    }
             }
         }
+
         stage('deploy'){
             steps{
                 script{
@@ -55,6 +72,13 @@ pipeline{
                 }
             }
         }
+        stage('Version Commit') {
+            steps {         
+                script{
+                    commitVersion()
+                }
+        }
+     }
     }
 
 }
