@@ -27,7 +27,7 @@ pipeline{
                     echo "Image Name: ${imageName}"
                     builddockerImage (imageName, location)
                     dockerLogin()
-                    dockerPush ("anssaeed/my-repo:$imageName")
+                    dockerPush (imageName)
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline{
                     def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
                     builddockerImage (imageName, location)
-                    dockerPush ("anssaeed/my-repo:$imageName")
+                    dockerPush (imageName)
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline{
                     def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
                     builddockerImage (imageName, location)
-                    dockerPush ("anssaeed/my-repo:$imageName")
+                    dockerPush (imageName)
                     }
             }
         }
