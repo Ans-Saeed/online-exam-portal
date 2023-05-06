@@ -18,14 +18,6 @@ pipeline{
             }
         }
 
-        stage('version bump'){
-            steps{
-                script{
-                    def imageName = incrementVersion('location_argument')
-                    echo "Image Name: ${imageName}"
-                }
-            }
-        }
         stage('build server'){
             steps{
                 script{
