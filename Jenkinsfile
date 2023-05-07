@@ -8,11 +8,11 @@ library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
 def gv
 pipeline{
     agent any
-    environment {
-        BACKEND_IMAGE = 'backend image'
-        FRONTEND_IMAGE = 'frontend image'
-        USER_FRONTEND_IMAGE = 'user frontend image'
-    }
+    // environment {
+    //     BACKEND_IMAGE = 'backend image'
+    //     FRONTEND_IMAGE = 'frontend image'
+    //     USER_FRONTEND_IMAGE = 'user frontend image'
+    // }
     stages {
 
         stage('init'){
@@ -30,7 +30,7 @@ pipeline{
                     def location = "$WORKSPACE/backend/"
                     def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    env.BACKEND_IMAGE= "anssaeed/my-repo:backend-$imageName"
+                    env.BACKEND_IMAGE = "anssaeed/my-repo:backend-$imageName"
                     builddockerImage (env.BACKEND_IMAGE, location)
                     dockerLogin()
                     dockerPush (env.BACKEND_IMAGE)
