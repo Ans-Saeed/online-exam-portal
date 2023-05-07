@@ -2,11 +2,13 @@ FROM node:13-alpine
 
 WORKDIR /usr/backend
 
+RUN apk --no-cache add curl
+
+# Install dependencies
+COPY package.json package-lock.json ./
+RUN npm ci --only=production
+
+# Copy application code
 COPY . .
-RUN rm -rf node_modules/ package-lock.json
-
-RUN npm install nodemon
-RUN npm install
-
 
 CMD ["sh", "-c", "npm run start"]

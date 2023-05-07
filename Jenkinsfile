@@ -69,7 +69,7 @@ pipeline{
             steps{
                 script{
                     echo 'deploying the application'
-                    def dockerCmd = "docker run -p 5000:5000 -d ${env.BACKEND_IMAGE} && docker run -p 3100:3000 -d ${env.FRONTEND_IMAGE} && docker run -p 3200:3000 -d ${env.USER_FRONTEND_IMAGE}"
+                    def dockerCmd = "docker run -p 5000:5000 --network my-network --name backend -d ${env.BACKEND_IMAGE} && docker run -p 3100:3000 --network my-network --name frontend -d ${env.FRONTEND_IMAGE} && docker run -p 3200:3000 --network my-network --name user-frontend -d ${env.USER_FRONTEND_IMAGE}"
                     sshagent(['ec2user-server-ssh-key']) {
                         sh "ssh -o StrictHostKeyChenking=no ec2-user@35.154.162.201 ${dockerCmd}"
                     }
