@@ -6,8 +6,7 @@ RUN apk --no-cache add curl
 
 # Install dependencies
 COPY package.json package-lock.json ./
-RUN npm ci --only=production
-
+RUN npm install
 # Copy application code
 COPY . .
 
