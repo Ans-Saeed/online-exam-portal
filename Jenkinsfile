@@ -8,6 +8,11 @@ library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
 def gv
 pipeline{
     agent any
+    environment {
+        BACKEND_IMAGE = 'backend image'
+        FRONTEND_IMAGE = 'frontend image'
+        USER_FRONTEND_IMAGE = 'user frontend image'
+    }
     stages {
 
         stage('init'){
@@ -25,10 +30,10 @@ pipeline{
                     def location = "$WORKSPACE/backend/"
                     def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    def dockerimage= "anssaeed/my-repo:backend-$imageName"
-                    builddockerImage (dockerimage, location)
+                    env.BACKEND_IMAGE= "anssaeed/my-repo:backend-$imageName"
+                    builddockerImage (env.BACKEND_IMAGE, location)
                     dockerLogin()
-                    dockerPush (dockerimage)
+                    dockerPush (env.BACKEND_IMAGE)
                 }
             }
         }
@@ -40,9 +45,9 @@ pipeline{
                     def location = "$WORKSPACE/frontend/"
                     def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    def dockerimage= "anssaeed/my-repo:frontend-$imageName"
-                    builddockerImage (dockerimage, location)
-                    dockerPush (dockerimage)
+                    env.FRONTEND_IMAGE= "anssaeed/my-repo:frontend-$imageName"
+                    builddockerImage (env.FRONTEND_IMAGE, location)
+                    dockerPush (env.FRONTEND_IMAGE)
                 }
             }
         }
@@ -53,9 +58,9 @@ pipeline{
                     def location = "$WORKSPACE/user-portal-frontend/"
                     def imageName = incrementVersion(location)
                     echo "Image Name: ${imageName}"
-                    def dockerimage= "anssaeed/my-repo:user-portal-frontend-$imageName"
-                    builddockerImage (dockerimage, location)
-                    dockerPush (dockerimage)
+                    env.USER_FRONTEND_IMAGE= "anssaeed/my-repo:user-portal-frontend-$imageName"
+                    builddockerImage (env.USER_FRONTEND_IMAGE, location)
+                    dockerPush (env.USER_FRONTEND_IMAGE)
                     }
             }
         }
@@ -64,9 +69,14 @@ pipeline{
             steps{
                 script{
                     echo 'deploying the application'
+                    def dockerCmd "docker run -p 5000:5000 -d ${env.BACKEND_IMAGE} && docker run -p 3100:3000 -d ${env.FRONTEND_IMAGE} && docker run -p 3200:3000 -d ${env.USER_FRONTEND_IMAGE}"
+                    sshagent(['ec2user-server-ssh-key']) {
+                        sh "ssh -o StrictHostKeyChenking=no ec2-user@35.154.162.201 ${dockerCmd}"
+                    }
                 }
             }
         }
+        
         stage('Version Commit') {
             steps {         
                 script{
